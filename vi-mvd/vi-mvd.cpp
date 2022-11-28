@@ -1,18 +1,14 @@
-﻿// vi-mvd.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
-//
+﻿// vi-mvd.cpp
 
 #include <iostream>
 
-void cp_fnc() {
-    int massive[5] = { 0,1,2,3,4 };
-    int cp_massive[5];
-
-    for (int x : massive)
-        std::cout << x << '\n';
+void cp_for() {
+	int massive[] = { 1, 2, 3, 4, 5, 6, 7 };
+	for (int& el : massive)
+		//std::cout << el;
+		++el;
 }
 
-int main()
-{
-    cp_fnc();
-}
+int main() {
 
+}
