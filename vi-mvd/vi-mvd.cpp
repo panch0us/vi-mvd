@@ -1,20 +1,26 @@
 ﻿#include <iostream>
-#include <typeinfo>
 #include <Windows.h> // Обязательно для SetConsoleCP() и SetConsoleOutputCP()
 
 // 1 курс, контрольная № 1, задание № 10
 float response() {
 	// Функция возвращает число с плавающей точкой
 	float response;
-	std::cout << "Введите число для расчета в функции (например: 2 или 2.2): ";
-	if (std::cin >> response, std::cin.good()) {
-		std::cout << response << std::endl;
-		return response;
-	}
-	else {
-		std::cout << "Введено неверное значение! Необходимо ввести цифру (например: 2 или 2.2) !" << std::endl;
-		std::cin.clear();		
-	}
+	bool finish = false;
+	
+	while (finish == false) {
+		std::cout << "Введите число для расчета в функции (например: 2 или 2.2): ";
+		std::cin >> response;
+		
+		if (std::cin.good()) {
+			finish = true;
+			return response;
+		}
+		else {
+			std::cout << "Введено неверное значение! Необходимо ввести число (например: 2 или 2.2) !" << std::endl;
+			std::cin.clear();
+			std::cin.ignore();
+		}
+	}	
 }
 
 void my_f(float x) {
