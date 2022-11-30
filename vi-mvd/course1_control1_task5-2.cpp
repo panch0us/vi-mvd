@@ -2,20 +2,20 @@
 
 using namespace std;
 
-void f1(int a, int *b, int &c) {
-	a += 10;
-	(*b) += 10;
-	c += 10;
-}
 
 int main() {
-	int x = 10;
-	int y = 20;
-	int z = 30;
+	int x;
 
-	f1(x, &y, z);
+	metka:	cout << "vvedite znchenie x: ";
+			cin >> x;
 
-	cout << x << " " << y << " " << z << endl;
-
+			if (x) {
+				cout << 10 / x;
+			}
+			else {
+				cout << "GOTO!";
+				goto metka;
+			}
+				
 	return 0;
 }
