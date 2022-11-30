@@ -1,12 +1,21 @@
 #include <iostream>
-#include <iomanip>
 
+using namespace std;
+
+void f1(int a, int *b, int &c) {
+	a += 10;
+	(*b) += 10;
+	c += 10;
+}
 
 int main() {
-	int a = 0;
-	float b = 5;
+	int x = 10;
+	int y = 20;
+	int z = 30;
 
-	double i = 12345.1234567;
-	std::cout << std::fixed << std::setprecision(5) << i << std::endl;
-	std::cout << std::setw(20) << std::showpoint << std::setprecision(2) << b << "QWE";
+	f1(x, &y, z);
+
+	cout << x << " " << y << " " << z << endl;
+
+	return 0;
 }
