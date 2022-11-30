@@ -4,18 +4,17 @@ using namespace std;
 
 
 int main() {
-	int x;
+	double massive[10];
+	double *pd = &massive[0];
 
-	metka:	cout << "vvedite znchenie x: ";
-			cin >> x;
+	for (int i = 0; i < 10; i++) {
+		cout << "massive[" << i << "] = ";
+		cin >> *pd++;
+	}
 
-			if (x) {
-				cout << 10 / x;
-			}
-			else {
-				cout << "GOTO!";
-				goto metka;
-			}
-				
+	for (double x : massive) {
+		cout << x << endl;
+	}
+
 	return 0;
 }
