@@ -1,20 +1,21 @@
 #include <iostream>
-
 using namespace std;
 
-
 int main() {
-	double massive[10];
-	double *pd = &massive[0];
+	float massive[100];
+	float summ = 0;
+	int count;
 
-	for (int i = 0; i < 10; i++) {
+	cout << "vvedite kolichestvo iteraciy: ";
+	cin >> count;
+
+	for (int i = 0; i < count; i++) {
 		cout << "massive[" << i << "] = ";
-		cin >> *pd++;
+		cin >> *(massive + i);
+		summ += *(massive + i);
 	}
-
-	for (double x : massive) {
-		cout << x << endl;
-	}
+	
+	cout << "Summa = " << summ << endl;
 
 	return 0;
 }
