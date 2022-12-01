@@ -2,20 +2,46 @@
 using namespace std;
 
 int main() {
-	float massive[100];
-	float summ = 0;
-	int count;
+	int rows;
+	int cols;
 
-	cout << "vvedite kolichestvo iteraciy: ";
-	cin >> count;
+	cout << "vvedite kolichestvo strok: ";
+	cin >> rows;
+	cout << "vvedite kolichestvo stolbcov: ";
+	cin >> cols;
 
-	for (int i = 0; i < count; i++) {
-		cout << "massive[" << i << "] = ";
-		cin >> *(massive + i);
-		summ += *(massive + i);
+	int  **array = new int* [rows];
+
+	for (int i = 0; i < rows; i++)
+	{
+		array[i] = new int [cols];
+	}
+
+	for (int i = 0; i < rows; i++)
+	{
+		for (int j = 0; j < cols; j++)
+		{
+			array[i][j] = rand() % 100;
+		}
+	}
+
+	for (int i = 0; i < rows; i++)
+	{
+		for (int j = 0; j < cols; j++)
+		{
+			cout << array[i][j] << "\t";
+		}
+		cout << endl;
+	}
+
+	
+	/////////////////////////////
+	for (int i = 0; i < rows; i++)
+	{
+		delete[] array[i];
 	}
 	
-	cout << "Summa = " << summ << endl;
+	delete[] array;
 
 	return 0;
 }
