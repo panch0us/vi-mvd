@@ -6,14 +6,12 @@
 Разрешается использовать дополнительный массив».
 */
 
-
 #include <iostream>
 #include <Windows.h>
 using namespace std;
 
 int** arr_f(int &rows, int &cols, int &random) {
 
-	
 	cout << "Введите количество строк матрицы: "; cin >> rows;
 	cout << "Введите количество столбцов матрицы: "; cin >> cols;
 	cout << "Введите диапазон для случайных чисел: "; cin >> random;
@@ -73,7 +71,6 @@ int main() {
 		}
 	}
 		
-	
 	cout << endl << "Матрица с сортировкой по неубыванию:" << endl;
 	for (int i = 0; i < rows; i++)
 	{
@@ -85,7 +82,7 @@ int main() {
 	}
 
 	// освобождаем память
-	for (int i = 0; i < cols; i++)
+	for (int i = 0; i < rows; i++)
 	{
 		delete[] array[i];
 	}
