@@ -2,46 +2,42 @@
 using namespace std;
 
 int main() {
-	int rows;
-	int cols;
+	
+	int **array = new int *[3];
 
-	cout << "vvedite kolichestvo strok: ";
-	cin >> rows;
-	cout << "vvedite kolichestvo stolbcov: ";
-	cin >> cols;
-
-	int  **array = new int* [rows];
-
-	for (int i = 0; i < rows; i++)
+	for (int i = 0; i < 3; i++)
 	{
-		array[i] = new int [cols];
+		*(array+i) = new int [5];
 	}
 
-	for (int i = 0; i < rows; i++)
+	cout << "array = " << array << ", *(array) = " << *(array) << endl;
+
+
+	
+	for (int i = 0; i < 3; i++)
 	{
-		for (int j = 0; j < cols; j++)
+		for (int j = 0; j < 5; j++)
 		{
-			array[i][j] = rand() % 100;
+			*(*(array + i)+ j) = rand() % 20;
 		}
 	}
 
-	for (int i = 0; i < rows; i++)
+	for (int i = 0; i < 3; i++)
 	{
-		for (int j = 0; j < cols; j++)
+		for (int j = 0; j < 5; j++)
 		{
+			cout << ((array + i) + j) << " -> ";
 			cout << array[i][j] << "\t";
 		}
 		cout << endl;
 	}
 
-	
-	/////////////////////////////
-	for (int i = 0; i < rows; i++)
+	for (int i = 0; i < 3; i++)
 	{
-		delete[] array[i];
+		delete [] *(array + i);
 	}
-	
-	delete[] array;
+
+	delete [] array;
 
 	return 0;
 }
