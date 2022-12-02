@@ -1,43 +1,69 @@
 #include <iostream>
 using namespace std;
 
-int main() {
-	
-	int **array = new int *[3];
+int** arr_f(int &rows, int &cols) {
 
-	for (int i = 0; i < 3; i++)
-	{
-		*(array+i) = new int [5];
+	cout << "count rows: "; cin >> rows;
+	cout << "count cols: "; cin >> cols;
+
+	int** arr = new int *[rows];
+
+	for (int i = 0; i < rows; i++)
+	{	
+		*(arr + i) = new int [cols];
 	}
 
-	cout << "array = " << array << ", *(array) = " << *(array) << endl;
-
-
-	
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < rows; i++)
 	{
-		for (int j = 0; j < 5; j++)
+		for (int j = 0; j < cols; j++)
 		{
-			*(*(array + i)+ j) = rand() % 20;
+			*(*(arr + i) + j) = rand() % 10;
 		}
 	}
 
-	for (int i = 0; i < 3; i++)
+	return arr;
+}
+
+int main() {
+	int rows = 0, cols = 0, summ = 0, count = 0, average = 0;
+
+	int **array = arr_f(rows, cols);
+
+	cout << "ARRAY: " << endl;
+
+	for (int i = 0; i < rows; i++)
 	{
-		for (int j = 0; j < 5; j++)
+		for (int j = 0; j < cols; j++)
 		{
-			cout << ((array + i) + j) << " -> ";
-			cout << array[i][j] << "\t";
+			cout << *(*(array + i) + j) << '\t';
 		}
 		cout << endl;
 	}
 
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < rows; i++)
 	{
-		delete [] *(array + i);
+		for (int j = 0; j < cols; j++)
+		{
+			if ( !(*(*(array + i) + j) % 2) ) {
+				summ += *(*(array + i) + j);
+				count += 1;
+			}
+		}
 	}
 
-	delete [] array;
+	if (count) {
+		average = summ / count;
+	}
+
+	cout << "summ = " << summ << endl << "count = " << count << endl << "average = " << average << endl;
+
+
+	for (int i = 0; i < cols; i++)
+	{
+		delete[] array[i];
+	}
+
+	delete[] array;
 
 	return 0;
 }
