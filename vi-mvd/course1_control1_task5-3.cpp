@@ -36,7 +36,7 @@ int main() {
 	cout << endl << "Находим повторяющиейся значения: " << endl;
 	for (int i = 0; i < elements - 1; i++)
 	{
-		for (int j = (i + 1); j < elements - 1; j++)
+		for (int j = i + 1; j < elements - 1; j++)
 		{
 			if (array[i] == array[j]) {
 				cout << "Элемент № " << i << "(" << array[i] << ")" 
