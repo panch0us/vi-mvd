@@ -60,7 +60,8 @@ int main() {
 	{
 		if (phone_number == sotrudniki[i].phone_num) {
 			cout << endl << "---------------------------------------" << endl;
-			cout << "Указанный телефонный номер использует сотрудник № " << i + 1 << ": " << endl;
+			cout << "Указанный телефонный номер использует сотрудник № " 
+				<< i + 1 << ": " << endl;
 			cout << "ФИО: " << sotrudniki[i].fam << " ";
 			cout << sotrudniki[i].imya << " ";
 			cout << sotrudniki[i].otch << endl;
@@ -69,10 +70,12 @@ int main() {
 			cout << "Дата рождения: " << sotrudniki[i].d_rojd << "."
 				<< sotrudniki[i].m_rojd << "."
 				<< sotrudniki[i].y_rojd << endl;
-			cout << endl << "Продолжается поиск по оставшимся сотрудникам..." << endl;
+			cout << endl << "Продолжается поиск по оставшимся сотрудникам..." 
+				<< endl;
 		}
 		else {
-			cout << "Поиск завершен! Телефонный номер " << phone_number << " в БД отсутсвует!" << endl;
+			cout << "Поиск завершен! Телефонный номер " << phone_number 
+				<< " в БД отсутсвует!" << endl;
 		}
 	}
 
