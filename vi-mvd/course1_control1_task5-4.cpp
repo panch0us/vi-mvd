@@ -29,7 +29,7 @@ int main() {
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
 
-	int employes_count = 0;
+	int employes_count = 0; // Количество сотрудников для ввода в БД
 	cout << "Введите количество сотрудников для ввода в базу: ";
 	cin >> employes_count;
 
@@ -37,6 +37,8 @@ int main() {
 	
 	for (int i = 0; i != employes_count; i++)
 	{	
+		cout << endl << "---------------------------------------" << endl;
+		cout << "Введите данные о сотруднике № " << i + 1 << ": " << endl;
 		cout << "Фамилия: ";
 		cin >> sotrudniki[i].fam;
 		cout << "Имя: ";
@@ -45,6 +47,8 @@ int main() {
 		cin >> sotrudniki[i].otch;
 		cout << "Номер телефона: ";
 		cin >> sotrudniki[i].phone_num;
+		cout << "Звание: ";
+		cin >> sotrudniki[i].zvan;
 		cout << "Дата рождения: " << endl;
 		cout << "\tДень: ";
 		cin >> sotrudniki[i].d_rojd;
@@ -54,20 +58,22 @@ int main() {
 		cin >> sotrudniki[i].y_rojd;
 	}
 
+	cout << endl << "---------------------------------------" << endl;
+	cout << "Список всех сотрудников в базе: ";
+
 	for (int i = 0; i != employes_count; i++)
 	{	
 		cout << endl << "---------------------------------------" << endl;
 		cout << "Сотрудник № " << i + 1 << ": " << endl;
-
-		cout << "Фамилия: " << sotrudniki[i].fam << endl;
-		cout << "Имя: " << sotrudniki[i].imya << endl;
-		cout << "Отчество: " << sotrudniki[i].otch << endl;
+		cout << "ФИО: " << sotrudniki[i].fam << " ";
+		cout << sotrudniki[i].imya << " ";
+		cout << sotrudniki[i].otch << endl;
 		cout << "Номер телефона: " << sotrudniki[i].phone_num << endl;
+		cout << "Звание: " << sotrudniki[i].zvan << endl;
 		cout << "Дата рождения: " << sotrudniki[i].d_rojd << "."
-			<< sotrudniki[i].m_rojd << "." << sotrudniki[i].y_rojd << endl;
+			<< sotrudniki[i].m_rojd << "." 
+			<< sotrudniki[i].y_rojd << endl;
 	}
-	
-
 
 	return 0;
 }
