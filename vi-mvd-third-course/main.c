@@ -10,12 +10,25 @@ enum {
 
 /* Определяем струкрутру лица для опознания*/
 struct person {
-    char surname[max_name_len];          /* Фамилия     */
+    char surname[64];          /* Фамилия     */
     char name[max_name_len];             /* Имя         */
     char middle_name[max_name_len];      /* Отчество    */
-    char sex;                            /* М или Ж     */
+    char sex[5];                            /* М или Ж     */
 };
 
+
+void menu(){ 
+    char *menu = "\tАИПС \"Опознание\"\n \
+                 \tМеню:\n \
+                 Введите нужное число для выбора действия:\n \
+                 1. Ввод лица\n \
+                 2. Поиск лица\n \
+                 3. Редактирование лица\n \
+                 4. Инструкция\n \
+                 5. О программе\n";
+    
+    printf("%s", menu);
+}
 
 int main()
 {
@@ -46,25 +59,44 @@ int main()
         return 1;
     }
 
-    printf("table created\n");
-
-    char *hello = "Программа \"Опознание\"";
-    char *menu = "\tМеню:\nВведите нужное число для выбора действия:\n \
-    1. Ввод лица\n \
-    2. Поиск лица\n \
-    3. Редактирование лица\n";
+    printf("Таблица создана успешно!\n\n");
     
-    printf("%s\n%s\n", hello, menu);
+    menu();
 
-    int select_menu;
+    int select_menu; /* Какой пункт меню выбрал пользователь */
     struct person prsn;
 
     while((select_menu = getchar()) != EOF) {
         if(select_menu == '1') {
-            printf("Вы выбрали ввод лица!\n");
-            printf("Введите фамилию: ");
-            scanf("%s", prsn.surname);
-            printf("Вы ввели фамилию: %s\n", prsn.surname);
+            getchar(); // Разобраться, почему лишний символ \n 
+            printf("Вы выбрали ввод лица!\nВведите фамилию: ");
+            scanf("%63[^'\n']", prsn.surname);
+            getchar();
+            printf("Введите имя: ");
+            scanf("%63[^'\n']", prsn.name);
+            getchar();
+            printf("Введите отчество: ");
+            scanf("%63[^'\n']", prsn.middle_name);
+            printf("Введите пол: ");
+            scanf("%4s[^'\n']", prsn.sex);
+            getchar();
+
+            char *sql = "INSERT INTO person (surname, name, middle_name, sex) VALUE (";
+            char *sql2;
+            
+            char sql_res[500];
+            scanf(sql2, "%s, %s, %s, %s", prsn.surname, prsn.name, prsn.middle_name, prsn.sex);
+            snprintf(sql_res, sizeof sql_res, "%s%s", sql, sql2);
+            printf("%s\n", sql_res);
+            result = sqlite3_exec(db, sql_res, 0, 0, &err_msg);
+
+            if(result != SQLITE_OK){
+                printf("SQL error: %s\n", err_msg);
+                sqlite3_free(err_msg);
+                sqlite3_close(db);
+                return 1;
+            }
+
             break;
         }
         if(select_menu == '2') {
