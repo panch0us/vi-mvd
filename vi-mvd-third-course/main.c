@@ -65,7 +65,8 @@ int main()
 
     int select_menu; /* Какой пункт меню выбрал пользователь */
     struct person prsn;
-
+    
+    // добавить анализ для scanf на возвращаемое значение (стр 117 столяров)
     while((select_menu = getchar()) != EOF) {
         if(select_menu == '1') {
             getchar(); // Разобраться, почему лишний символ \n 
