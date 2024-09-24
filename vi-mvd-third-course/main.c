@@ -81,7 +81,8 @@ int main()
             printf("Введите пол: ");
             scanf("%4s[^'\n']", prsn.sex);
             getchar();
-
+            
+            // попробовать snprintf или spirintf
             char *sql = "INSERT INTO person (surname, name, middle_name, sex) VALUE (";
             char *sql2;
             
