@@ -82,7 +82,7 @@ int main()
             scanf("%4s[^'\n']", prsn.sex);
             getchar();
             
-            // попробовать snprintf или spirintf
+            // попробовать snprintf или spirintf?
             char *sql = "INSERT INTO person (surname, name, middle_name, sex) VALUE (";
             char *sql2;
             
