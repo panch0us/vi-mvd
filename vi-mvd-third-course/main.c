@@ -3,17 +3,15 @@
 
 
 /* Определяем константы */
-enum {
-    max_name_len = 64,
-};
+enum { max_name_len = 64 };
 
 
 /* Определяем струкрутру лица для опознания*/
 struct person {
-    char surname[64];          /* Фамилия     */
-    char name[max_name_len];             /* Имя         */
-    char middle_name[max_name_len];      /* Отчество    */
-    char sex[5];                            /* М или Ж     */
+    char surname[max_name_len];             // Фамилия
+    char name[max_name_len];                // Имя
+    char middle_name[max_name_len];         // Отчество
+    char sex[5];                            // М или Ж
 };
 
 
@@ -83,14 +81,14 @@ int main()
             getchar();
             
             // попробовать snprintf или spirintf?
-            char *sql = "INSERT INTO person (surname, name, middle_name, sex) VALUE (";
-            char *sql2;
-            
-            char sql_res[500];
-            scanf(sql2, "%s, %s, %s, %s", prsn.surname, prsn.name, prsn.middle_name, prsn.sex);
-            snprintf(sql_res, sizeof sql_res, "%s%s", sql, sql2);
-            printf("%s\n", sql_res);
-            result = sqlite3_exec(db, sql_res, 0, 0, &err_msg);
+            char *for_sql = "INSERT INTO person (surname, name, middle_name, sex) VALUES (";
+            char *sql[500];
+
+            sprintf(sql, "%s'%s', '%s', '%s', '%s');", for_sql, prsn.surname, prsn.name, prsn.middle_name, prsn.sex);
+
+            printf("%s\n", sql);
+
+            result = sqlite3_exec(db, sql, 0, 0, &err_msg);
 
             if(result != SQLITE_OK){
                 printf("SQL error: %s\n", err_msg);
