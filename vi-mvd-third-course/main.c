@@ -102,13 +102,13 @@ int main()
             getchar();
             
             char *for_sql = "INSERT INTO person (surname, name, middle_name, sex) VALUES (";
-            char *sql[100];
+            char sql[512];
 
-            sprintf(*sql, "%s'%s', '%s', '%s', '%s');", for_sql, prsn.surname, prsn.name, prsn.middle_name, prsn.sex);
+            sprintf(sql, "%s'%s', '%s', '%s', '%s');", for_sql, prsn.surname, prsn.name, prsn.middle_name, prsn.sex);
 #ifdef DEBUG
-            printf("%s\n", *sql);
+            printf("%s\n", sql);
 #endif
-            result = sqlite3_exec(db, *sql, 0, 0, &err_msg);
+            result = sqlite3_exec(db, sql, 0, 0, &err_msg);
 
             if(result != SQLITE_OK){
                 printf("SQL error: %s\n", err_msg);
