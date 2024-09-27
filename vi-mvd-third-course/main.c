@@ -78,15 +78,27 @@ int main()
             getchar();
             
             printf("Введите имя: ");
-            scanf("%63[^'\n']", prsn.name);
+            scanf_result = scanf("%63[^'\n']", prsn.name);
+            if(scanf_result != 1){
+                printf("Error: wrong input.\n");
+                return 1;
+            }
             getchar();
             
             printf("Введите отчество: ");
-            scanf("%63[^'\n']", prsn.middle_name);
+            scanf_result = scanf("%63[^'\n']", prsn.middle_name);
+            if(scanf_result != 1){
+                printf("Error: wrong input.\n");
+                return 1;
+            }
             getchar();
 
             printf("Введите пол: ");
-            scanf("%2[^'\n']", prsn.sex);
+            scanf_result = scanf("%2[^'\n']", prsn.sex);
+            if(scanf_result != 1){
+                printf("Error: wrong input.\n");
+                return 1;
+            }
             getchar();
             
             char *for_sql = "INSERT INTO person (surname, name, middle_name, sex) VALUES (";
