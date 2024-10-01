@@ -94,6 +94,7 @@ int main()
             getchar();
 
             printf("Введите пол: ");
+            // заменить scanf на getchar? (работает быстрее)
             scanf_result = scanf("%2[^'\n']", prsn.sex);
             if(scanf_result != 1){
                 printf("Error: wrong input.\n");
