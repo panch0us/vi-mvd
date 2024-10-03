@@ -1,5 +1,11 @@
 #include <stdio.h>
+#include <locale.h>
+#include <libintl.h>
 #include "sqlite3.h"
+
+// Макросы для перевода текста 
+#define _(STR) (STR)
+#define N_(STR) (STR)
 
 #define MENU \
     "АИПС \"Опознание\"\n" \
@@ -55,7 +61,7 @@ int main()
     }
     
 #ifdef DEBUG
-    printf("Таблица создана успешно!\n");
+    printf(_("Таблица создана успешно!\n"));
     printf("Дата: %s, Время: %s\n", __DATE__, __TIME__);
 #endif
     puts(MENU);
@@ -121,10 +127,12 @@ int main()
 
             break;
         }
+
         if(select_menu == '2') {
             printf("Вы выбрали Поиск лица!\n");
             break;
         }
+
         if(select_menu == '3') {
             printf("Вы выбрали редактирование лица!\n");
             break;
