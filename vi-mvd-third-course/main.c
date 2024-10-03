@@ -67,8 +67,9 @@ int main()
     // Анализируем выбор пункта меню пользователя 
     while((select_menu = getchar()) != EOF) {
         if(select_menu == '1') {
-            getchar(); // Разобраться, почему лишний символ \n 
+            getchar(); 
             
+            // Блок ввода фамилии
             printf("Вы выбрали ввод лица!\nВведите фамилию: ");
             scanf_result = scanf("%63[^'\n']", prsn.surname);
             if(scanf_result != 1){
@@ -95,35 +96,11 @@ int main()
 
             // Блок ввода пола
             printf("Введите пол: ");
-            int sex;
-            while((sex = getchar()) != EOF ){
-                switch(sex)
-                {
-                    case 'м' :
-                    case 'М' : break;
-
-                    case 'ж' :
-                    case 'Ж' : break;
-
-                    case '\n': break;
-
-                    default : printf("Не верно указано. Введите м или ж");
-                              break;
-                }
-
-                if(sex == '\n'){
-                    prsn.sex = (char)sex;
-                    break;
-                }
-            }
-            // заменить scanf на getchar? (работает быстрее)
-            /*
             scanf_result = scanf("%2[^'\n']", prsn.sex);
             if(scanf_result != 1){
                 printf("Error: wrong input.\n");
                 return 1;
             }
-            */
             getchar();
             
             char *for_sql = "INSERT INTO person (surname, name, middle_name, sex) VALUES (";
