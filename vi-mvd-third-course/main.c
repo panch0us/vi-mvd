@@ -1,21 +1,19 @@
 #include <stdio.h>
-#include <locale.h>
-#include <libintl.h>
 #include "sqlite3.h"
 
-// Макросы для перевода текста 
-#define _(STR) (STR)
-#define N_(STR) (STR)
-
 #define MENU \
-    "АИПС \"Опознание\"\n" \
-    "Меню:\n" \
-    "Введите нужное число для выбора действия:\n" \
-    "1. Ввод лица\n" \
-    "2. Поиск лица\n" \
-    "3. Редактирование лица\n" \
-    "4. Инструкция\n" \
-    "5. О программе\n"
+    "===============================================================\n" \
+    "|                       АИПС Опознание                        |\n" \
+    "|                            Меню:                            |\n" \
+    "| Введите нужное число для выбора действия:                   |\n" \
+    "| 1. Ввод лица                                                |\n" \
+    "| 2. Поиск лица                                               |\n" \
+    "| 3. Редактирование лица                                      |\n" \
+    "| 4. Инструкция                                               |\n" \
+    "| 5. О программе                                              |\n" \
+    "| 6. Выход                                                    |\n" \
+    "| Для завершения программы нажмите ctrl+d или введите цифру 6 |\n" \
+    "===============================================================\n"
 
 
 /* Определяем константы */
@@ -61,7 +59,7 @@ int main()
     }
     
 #ifdef DEBUG
-    printf(_("Таблица создана успешно!\n"));
+    printf("Таблица создана успешно!\n");
     printf("Дата: %s, Время: %s\n", __DATE__, __TIME__);
 #endif
     puts(MENU);
@@ -72,16 +70,19 @@ int main()
     
     // Анализируем выбор пункта меню пользователя 
     while((select_menu = getchar()) != EOF) {
-        if(select_menu == '1') {
-            getchar(); 
+        switch(select_menu)  
+        {
+            case '1':
+                getchar(); 
             
-            // Блок ввода фамилии
-            printf("Вы выбрали ввод лица!\nВведите фамилию: ");
-            scanf_result = scanf("%63[^'\n']", prsn.surname);
-            if(scanf_result != 1){
-                printf("Error: wrong input.\n");
-                return 1;
-            }
+                // Блок ввода фамилии
+                printf("Вы выбрали ввод лица!\nВведите фамилию: ");
+                scanf_result = scanf("%63[^'\n']", prsn.surname);
+                if(scanf_result != 1){
+                    printf("Error: wrong input.\n");
+                    return 1;
+                
+                }
             getchar();
             
             printf("Введите имя: ");
@@ -109,12 +110,26 @@ int main()
             }
             getchar();
             
+            printf("                                          \n \
+            --------------------------------------------------\n \
+            Внимание! Проверьте введенные данные!\n \
+            Вы ввели следующие данные:\n \
+            Фамилия: %s\n \
+            Имя: %s\n \
+            Отчество: %s\n \
+            Пол: %s\n \
+            --------------------------------------------------- \n \
+                           1. Верно\n \
+                           2. Ввести заново\n \
+            ---------------------------------------------------\n\n",
+            prsn.surname, prsn.name, prsn.middle_name, prsn.sex); 
+
             char *for_sql = "INSERT INTO person (surname, name, middle_name, sex) VALUES (";
             char sql[512];
 
             sprintf(sql, "%s'%s', '%s', '%s', '%s');", for_sql, prsn.surname, prsn.name, prsn.middle_name, prsn.sex);
 #ifdef DEBUG
-            printf("%s\n", sql);
+            printf("DEBUG: %s\n", sql);
 #endif
             result = sqlite3_exec(db, sql, 0, 0, &err_msg);
 
@@ -126,17 +141,24 @@ int main()
             }
 
             break;
-        }
 
-        if(select_menu == '2') {
+        case '2':
+            getchar();
             printf("Вы выбрали Поиск лица!\n");
             break;
-        }
 
-        if(select_menu == '3') {
+        case '3':
+            getchar();
             printf("Вы выбрали редактирование лица!\n");
             break;
+        
+        default:
+            getchar();
+            printf("Введен неверный символ для меню, выберит между 1-6\n");
+            break;
         }
+        
+        puts(MENU);
     }
 
     sqlite3_close(db); /* Закрываем подключение к БД */
