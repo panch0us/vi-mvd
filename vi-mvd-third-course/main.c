@@ -83,10 +83,10 @@ int main()
                     return 1;
                 
                 }
-            getchar();
+                 getchar();
             
-            printf("Введите имя: ");
-            scanf_result = scanf("%63[^'\n']", prsn.name);
+                printf("Введите имя: ");
+                scanf_result = scanf("%63[^'\n']", prsn.name);
             if(scanf_result != 1){
                 printf("Error: wrong input.\n");
                 return 1;
@@ -110,19 +110,33 @@ int main()
             }
             getchar();
             
-            printf("                                          \n \
-            --------------------------------------------------\n \
-            Внимание! Проверьте введенные данные!\n \
-            Вы ввели следующие данные:\n \
-            Фамилия: %s\n \
-            Имя: %s\n \
-            Отчество: %s\n \
-            Пол: %s\n \
-            --------------------------------------------------- \n \
-                           1. Верно\n \
-                           2. Ввести заново\n \
-            ---------------------------------------------------\n\n",
-            prsn.surname, prsn.name, prsn.middle_name, prsn.sex); 
+            printf("-------------------------------------------------\n \
+                \rВнимание! Проверьте введенные данные!\n \
+                \rВы ввели следующие данные:\n \
+                \rФамилия: %s\n \
+                \rИмя: %s\n \
+                \rОтчество: %s\n \
+                \rПол: %s\n \
+                \r--------------------------------------------------- \n \
+                \r           1. Верно\n \
+                \r           2. Ввести заново\n \
+                \r---------------------------------------------------\n\n",
+                prsn.surname, prsn.name, prsn.middle_name, prsn.sex); 
+            
+            while((select_menu = getchar()) != EOF) {
+                switch(select_menu){
+                    case '1':
+                       getchar();
+                       printf("aaaa\n");
+                       break;
+
+                    default:
+                       getchar();
+                       printf("default\n");
+                       break;
+                }
+                break;
+            }
 
             char *for_sql = "INSERT INTO person (surname, name, middle_name, sex) VALUES (";
             char sql[512];
