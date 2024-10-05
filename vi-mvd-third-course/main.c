@@ -30,6 +30,7 @@ struct person {
     char sex[3];                        /* М or Ж */
 };
 
+/* callback-function for database requests */
 int callback(void*, int, char**, char**);
 
 int main()
@@ -128,12 +129,12 @@ int main()
                     switch(select_menu_after_input){
                         case '1':
                             getchar();
-                            printf("Выбарно: Данные введены верно. ");
+                            printf("Выбарно: Данные введены верно ");
                             break;
                         
                         case '2':
                             getchar();
-                            printf("Выбарно: Данные введены неверно. Запись в базу не проводилась.\n");
+                            printf("Выбарно: Данные введены неверно. Запись в базу не проводилась\n");
                             break;
 
                         case '\n':
@@ -239,7 +240,7 @@ int main()
                     break;
                 }
             break;
-            
+
             /* Edit person */    
             case '3':
                 getchar();
