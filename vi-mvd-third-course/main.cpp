@@ -5,7 +5,12 @@ using namespace std;
 #include <FL/Fl_Window.H>
 #include <FL/Fl_Box.H>
 #include <FL/Fl_Button.H>
+#include <FL/Fl_Input.H>
+#include <FL/Fl_Light_Button.H>
 #include "person.h"
+#include "gui.cpp"
+
+string surname;
 
 // константы
 enum {
@@ -24,46 +29,9 @@ static const char *msg[] = {
     "Выход"
 };
 
-static void exit_callback(Fl_Widget *w, void *);
+static void callback_input_surname(Fl_Widget *w, void *user) {
+    printf("%s\n", ((Fl_Input*)user)->value());
 
-
-int main(int argc, char **argv)
-{
-    string surname = "Савкин";
-    string name = "Павел";
-    string middle_name = "Владимирович";
-    string sex = "М";
-
-    PersonMissing pm;
-    pm.setSurname(surname);
-    pm.setName(name);
-    pm.setMiddleName(middle_name);
-    pm.setSex(sex);
-    pm.setBirthYear(1990);
-
-    cout << pm.getSurname() << std::endl;
-    cout << pm.getName() << std::endl;
-
-
-    int win_w = 1024;
-    int win_h = 768;
-    Fl_Window *win = new Fl_Window(win_w, win_h, "АИПС Опознание"); // создаем главное окно
-
-    Fl_Button *b[4]; // создаем объекты кнопок
-    int i;
-    int y = spacing;
-    for(i = 0; i < 4; i++){
-        b[i] = new Fl_Button(spacing, y, button_w, button_h, msg[i+1]);
-        b[i]->labelsize(font_size);
-        y += button_h + spacing;
-    }
-    win->end();
-    
-    // установим реакцию на нажатие кнопок
-    b[3]->callback(exit_callback, 0);
-
-    win->show();
-    return Fl::run();
 }
 
 static void exit_callback(Fl_Widget *w, void *)
@@ -76,3 +44,37 @@ static void exit_callback(Fl_Widget *w, void *)
     } while(p);
     w->hide();
 }
+
+static void input_callback(Fl_Widget *w, void *){
+    Fl_Window *window = new Fl_Window(500, 500, "Ввод лица");
+    Fl_Input *input_surname = new Fl_Input(100, 10, 200, 25, "Фамилия:");
+    Fl_Input *input_name = new Fl_Input(100, 40, 200, 25, "Имя:");
+    Fl_Button *input_enter = new Fl_Button(105, 70, 120, 25, "Ввод");
+    Fl_Button *input_cancel = new Fl_Button(230, 70, 60, 25, "Отмена");
+
+    // если написал текст и нажал Ввод
+    input_surname->callback(callback_input_surname, (void*)input_surname);
+    input_name->callback();
+    window->show();
+}
+
+
+int main(int argc, char **argv)
+{
+
+    Fl_Window *window = new Fl_Window(500, 500);
+    Fl_Box *box = new Fl_Box(100, 20, 300, 70,"Опознание");
+    box->box(FL_UP_BOX);
+    box->labelfont(FL_BOLD+FL_ITALIC);
+    box->labelsize(36);
+    box->labeltype(FL_SHADOW_LABEL);
+
+    Fl_Button *button_input = new Fl_Button(20, 120, 200, 40, "Ввод лица");
+    button_input->callback(input_callback, (void*)PersonMissing& pm);
+
+    window->end();
+    window->show(argc, argv);
+    
+    return Fl::run();
+}
+
