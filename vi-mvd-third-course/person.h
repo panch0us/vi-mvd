@@ -6,16 +6,23 @@ class PersonMissing {
     unsigned short int birth_day;
     unsigned short int birth_month;
     unsigned short int birth_year;
-    string birth_place;          //место рождения
-    string residence_place_last; //последнее место жительства
-    string appearance;           //описание внешности
-    string teeth;                //состояние зубного аппарата
-    string voice;                //характерные приметы голоса
-    string blood_group;          //группа крови
-    string clothes;              //описание одежды
-    string headdress_size;       //размер головного убора
-    string shoes_size;           //размеры обуви
-    
+    string birth_place;                     // место рождения
+    string residence_place_last;            // последнее место жительства
+    string appearance;                      // описание внешности
+    string teeth;                           // состояние зубного аппарата
+    string voice;                           // характерные приметы голоса
+    string blood_group;                     // группа крови
+    string clothes;                         // описание одежды
+    string headdress_size;                  // размер головного убора
+    string shoes_size;                      // размеры обуви
+    string area_loss;                       // район пропажи
+    unsigned short int day_loss_start       // день пропажи начало
+    unsigned short int month_loss_start     // месяц пропажи начало
+    unsigned short int year_loss_start      // год пропажи начало
+    unsigned short int day_loss_end         // день пропажи конец
+    unsigned short int month_loss_end       // месяц пропажи конец
+    unsigned short int year_loss_end        // год пропажи конец
+
 public:
     void setSurname(string &sn);
     void setName(string &n);
@@ -33,6 +40,13 @@ public:
     void setClothes(string &c);
     void setHeaddressSize(string &hs);
     void setShoesSize(string &ss);
+    void setAreaLoss(string &al);
+    void setDayLossStart(unsigned short int dls);
+    void setMonthLossStart(unsigned short int mls);
+    void setYearLossStart(unsigned short int yls);
+    void setDayLossEnd(unsigned short int dle);
+    void setMonthLossEnd(unsigned short int dle);
+    void setYearLossEnd(unsigned short int dle);
     
     string &getSurname();
     string &getName();
@@ -50,6 +64,13 @@ public:
     string &getClothes();
     string &getHeaddressSize();
     string &getShoesSize();
+    string &setAreaLoss();
+    unsigned short int getDayLossStart();
+    unsigned short int getMonthLossStart();
+    unsigned short int getYearLossStart();
+    unsigned short int getDayLossEnd();
+    unsigned short int getMonthLossEnd();
+    unsigned short int getYearLossEnd();
 };
 
 
@@ -117,6 +138,30 @@ inline void PersonMissing::setShoesSize(string &ss){
     shoes_size = ss;
 }
 
+inline void PersonMissing::setDayLossStart(unsigned short int dls){
+    day_loss_start = dls;
+}
+
+inline void PersonMissing::setMonthLossStart(unsigned short int mls){
+    month_loss_start = mls;
+}
+
+inline void PersonMissing::setYearLossStart(unsigned short int yls){
+    year_loss_start = yls;
+}
+
+inline void PersonMissing::setDayLossEnd(unsigned short int dls){
+    day_loss_end = dle;
+}
+
+inline void PersonMissing::setMonthLossEnd(unsigned short int mls){
+    month_loss_end = mle;
+}
+
+inline void PersonMissing::setYearLossEnd(unsigned short int yls){
+    year_loss_end = yle;
+}
+
 inline string &PersonMissing::getSurname(){
     return surname; 
 }
@@ -181,3 +226,26 @@ inline string &PersonMissing::getShoesSize(){
     return shoes_size;
 }
 
+inline unsigned short int PersonMissing::getDayLossStart(){
+    return day_loss_start; 
+}
+
+inline unsigned short int PersonMissing::getMonthLossStart(){
+    return month_loss_start; 
+}
+
+inline unsigned short int PersonMissing::getYearLossStart(){
+    return year_loss_start; 
+}
+
+inline unsigned short int PersonMissing::getDayLossEnd(){
+    return day_loss_end; 
+}
+
+inline unsigned short int PersonMissing::getMonthLossEnd(){
+    return month_loss_end; 
+}
+
+inline unsigned short int PersonMissing::getYearLossEnd(){
+    return year_loss_end; 
+}

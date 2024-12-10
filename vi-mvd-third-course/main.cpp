@@ -8,6 +8,7 @@ using namespace std;
 #include <stdlib.h>
 #include <iostream>
 #include <libpq-fe.h>
+
 #include "person.h"
 #include "menu_func.h"
 #include "bd_func.h"
@@ -52,6 +53,7 @@ int main(int argc, char **argv)
             printf("%s\n", msg[i]);
     
         cin >> select_menu; // пользователь вводин номер меню
+        fflush(stdin); // очищаем стандартный поток ввода от символа \n, оставшегося после cin
 
         // выбираем действия в зависимости от выбора пользователя
         switch (select_menu)

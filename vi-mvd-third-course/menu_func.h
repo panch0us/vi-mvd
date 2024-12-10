@@ -3,15 +3,15 @@ void input_person(PersonMissing &pm){
     unsigned short int buf_i = 0;
 
     cout << "¬видите фамилию: ";
-    cin >> buf;
+    getline(cin, buf);
     pm.setSurname(buf);
 
     cout << "¬видите им€: ";
-    cin >> buf;
+    getline(cin, buf);
     pm.setName(buf);
 
     cout << "¬видите отчество: ";
-    cin >> buf;
+    getline(cin, buf);
     pm.setMiddleName(buf);
 
     cout << "¬видите пол (м или ж): ";
@@ -31,38 +31,68 @@ void input_person(PersonMissing &pm){
     pm.setBirthYear(buf_i);
 
     cout << "¬видите место рождени€: ";
-    cin >> buf;
+    getline(cin, buf);
     pm.setBirthPlace(buf);
 
     cout << "¬видите последнее место жительства: ";
-    cin >> buf;
+    getline(cin, buf);
     pm.setResidentPlaceLast(buf);
 
     cout << "¬видите описание внешности: ";
-    cin >> buf;
+    getline(cin, buf);
     pm.setAppearance(buf);
 
     cout << "¬видите состо€ние зубного аппарата: ";
-    cin >> buf;
+    getline(cin, buf);
     pm.setTeeth(buf);
 
     cout << "¬видите характерные приметы голоса: ";
-    cin >> buf;
+    getline(cin, buf);
     pm.setVoice(buf);
 
     cout << "¬видите группу крови: ";
-    cin >> buf;
+    getline(cin, buf);
     pm.setBloodGroup(buf);
 
     cout << "¬видите описание одежды: ";
-    cin >> buf;
+    getline(cin, buf);
     pm.setClothes(buf);
 
     cout << "¬видите размер головного убора: ";
-    cin >> buf;
+    getline(cin, buf);
     pm.setHeaddressSize(buf);
 
     cout << "¬видите размеры обуви: ";
-    cin >> buf;
+    getline(cin, buf);
     pm.setShoesSize(buf);
+
+    cout << "¬видите район пропажи: ";
+    getline(cin, buf);
+    pm.setAreaLoss(buf);
+
+    cout << "¬видите день начала пропажи: ";
+    cin >> buf_i;
+    pm.setDayLossStart(buf_i);
+
+    cout << "¬видите мес€ц начала пропажи: ";
+    cin >> buf_i;
+    pm.setMonthLossStart(buf_i);
+
+    cout << "¬видите год начала пропажи: ";
+    cin >> buf_i;
+    pm.setYearLossStart(buf_i);
+
+    cout << "¬видите день конца пропажи: ";
+    cin >> buf_i;
+    pm.setDayLossEnd(buf_i);
+
+    cout << "¬видите мес€ц конца пропажи: ";
+    cin >> buf_i;
+    pm.setMonthLossEnd(buf_i);
+
+    cout << "¬видите год конца пропажи: ";
+    cin >> buf_i;
+    pm.setYearLossEnd(buf_i);
+
+    fflush(stdin); // очищаем стандартный поток ввода от символа \n, оставшегос€ после cin
 }
