@@ -10,14 +10,8 @@ using namespace std;
 #include <libpq-fe.h>
 #include "person.h"
 #include "menu_func.h"
+#include "bd_func.h"
 
-// константы
-enum {
-    spacing     = 5,       // промежутки
-    button_w    = 300,     // ширина кнопки
-    button_h    = 40,      // высота кнопки
-    font_size   = 20       // размер шрифта
-};
 
 // названия заголовков
 static const char *msg[] = {
@@ -37,54 +31,60 @@ int main(int argc, char **argv)
 
     const char my_con[] = "host=localhost dbname=postgres user=postgres password=12345678"; // тестовый вариант
     PGconn *conn = PQconnectdb(my_con);
-    printf("HELLO!!!1\n");
-    if (PQstatus(conn) != CONNECTION_OK)
-    {
+    if (PQstatus(conn) != CONNECTION_OK){
         fprintf(stderr, "Connection to database failed: %s", PQerrorMessage(conn));
         PQfinish(conn);
         return 1;
     }
 
-    PQfinish(conn);
+    // создаем таблицу в БД
+    create_table(conn);
 
-    int select_menu;
-    PersonMissing persmis;
-    string power = "on";
+    // Подготовка к загрузке главного меню
+    int select_menu;       // выбор пользователя по разделам меню
+    PersonMissing persmis; // создаем объект для опознания
+    string power = "on";   // если "on" - значит главный цикл работает
 
-    printf("HELLO!!!0\n");
 
     // вывод главного меню на экран
     while(power == "on"){
         for(int i = 0; i < 6; i++)
             printf("%s\n", msg[i]);
     
-        // пользователь вводин номер меню
-        cin >> select_menu;
+        cin >> select_menu; // пользователь вводин номер меню
 
         // выбираем действия в зависимости от выбора пользователя
         switch (select_menu)
         {
-        case 1:
-            {
-                cout << "Выбран ввод лица.\n";
-            int correct_input = 0;
-            
-            while(correct_input != 1){
-                input_person(persmis);
-                cout << "Данные введены верно? (1 - да / 0 - нет).";
-                cin >> correct_input;
-            }
-            break;
-            }
-        case 2:
-            cout << "Выбрано редактирование лица.\n";
-            break;
-        
-        default:
-            cout << "Неверный ввод!\n";
-            break;
+            case 1:
+                {
+                    cout << "Выбран ввод лица.\n";
+                    int correct_input = 0;
+                    
+                    while(correct_input != 1)
+                    {
+                        input_person(persmis);
+                        cout << "Данные введены верно? (1 - да / 0 - нет).";
+                        cin >> correct_input;
+                    }
+                    insert_table(conn, persmis);
+                    break;
+                }
+            case 2:
+                {
+                    cout << "Выбрано редактирование лица.\n";
+                    break;
+                }
+            default:
+                {
+                    cout << "Неверный ввод!\n";
+                    break;
+                }
         }
         
         //power = "off";
     }
+
+    // Завершаем работу с БД
+    PQfinish(conn);
 }
