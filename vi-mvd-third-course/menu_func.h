@@ -30,6 +30,8 @@ void input_person(PersonMissing &pm){
     cin >> buf_i;
     pm.setBirthYear(buf_i);
 
+    fflush(stdin); // очищаем стандартный поток ввода от символа \n, оставшегос€ после cin
+    
     cout << "¬видите место рождени€: ";
     getline(cin, buf);
     pm.setBirthPlace(buf);

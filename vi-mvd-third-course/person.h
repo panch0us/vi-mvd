@@ -64,7 +64,7 @@ public:
     string &getClothes();
     string &getHeaddressSize();
     string &getShoesSize();
-    string &setAreaLoss();
+    string &getAreaLoss();
     unsigned short int getDayLossStart();
     unsigned short int getMonthLossStart();
     unsigned short int getYearLossStart();
@@ -228,6 +228,10 @@ inline string &PersonMissing::getHeaddressSize(){
 
 inline string &PersonMissing::getShoesSize(){
     return shoes_size;
+}
+
+inline string &PersonMissing::getAreaLoss(){
+    return area_loss;
 }
 
 inline unsigned short int PersonMissing::getDayLossStart(){

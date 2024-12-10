@@ -46,25 +46,31 @@ void insert_table(PGconn *conn, PersonMissing &pm){
         blood_group,\
         clothes,\
         headdress_size,\
-        shoes_size\
+        shoes_size,\
+        area_loss,\
+        date_loss_start,\
+        date_loss_end\
         ) values";
 
     printf("GETYEAR: %d\n", pm.getBirthYear());
     insert += "('" +\
-        pm.getSurname()               + "', '" +\
-        pm.getName()                  + "', '" +\
-        pm.getMiddleName()            + "', '" +\
-        pm.getSex()                   + "', '" +\
-        to_string(pm.getBirthYear())  + '-' + to_string(pm.getBirthMonth()) + '-' + to_string(pm.getBirthDay()) + "', '" +\
-        pm.getBirthPlace()            + "', '" +\
-        pm.getResidentPlaceLast()     + "', '" +\
-        pm.getAppearance()            + "', '" +\
-        pm.getTeeth()                 + "', '" +\
-        pm.getVoice()                 + "', '" +\
-        pm.getBloodGroup()            + "', '" +\
-        pm.getClothes()               + "', '" +\
-        pm.getHeaddressSize()         + "', '" +\
-        pm.getShoesSize()             +\
+        pm.getSurname()                   + "', '" +\
+        pm.getName()                      + "', '" +\
+        pm.getMiddleName()                + "', '" +\
+        pm.getSex()                       + "', '" +\
+        to_string(pm.getBirthYear())      + '-'    + to_string(pm.getBirthMonth()) + '-' + to_string(pm.getBirthDay()) + "', '" +\
+        pm.getBirthPlace()                + "', '" +\
+        pm.getResidentPlaceLast()         + "', '" +\
+        pm.getAppearance()                + "', '" +\
+        pm.getTeeth()                     + "', '" +\
+        pm.getVoice()                     + "', '" +\
+        pm.getBloodGroup()                + "', '" +\
+        pm.getClothes()                   + "', '" +\
+        pm.getHeaddressSize()             + "', '" +\
+        pm.getShoesSize()                 + "', '" +\
+        pm.getAreaLoss()                  + "', '" +\
+        to_string(pm.getDayLossStart())   + '-'    + to_string(pm.getMonthLossStart()) + '-' + to_string(pm.getYearLossStart()) + "', '" +\
+        to_string(pm.getDayLossEnd())     + '-'    + to_string(pm.getMonthLossEnd()) + '-' + to_string(pm.getYearLossEnd()) +\
         "');";
 
     printf("%s\n", insert.c_str());
