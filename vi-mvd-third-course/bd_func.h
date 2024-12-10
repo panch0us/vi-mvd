@@ -52,7 +52,6 @@ void insert_table(PGconn *conn, PersonMissing &pm){
         date_loss_end\
         ) values";
 
-    printf("GETYEAR: %d\n", pm.getBirthYear());
     insert += "('" +\
         pm.getSurname()                   + "', '" +\
         pm.getName()                      + "', '" +\
@@ -70,15 +69,46 @@ void insert_table(PGconn *conn, PersonMissing &pm){
         pm.getShoesSize()                 + "', '" +\
         pm.getAreaLoss()                  + "', '" +\
         to_string(pm.getDayLossStart())   + '-'    + to_string(pm.getMonthLossStart()) + '-' + to_string(pm.getYearLossStart()) + "', '" +\
-        to_string(pm.getDayLossEnd())     + '-'    + to_string(pm.getMonthLossEnd()) + '-' + to_string(pm.getYearLossEnd()) +\
+        to_string(pm.getDayLossEnd())     + '-'    + to_string(pm.getMonthLossEnd())   + '-' + to_string(pm.getYearLossEnd()) +\
         "');";
 
-    printf("%s\n", insert.c_str());
+    //printf("%s\n", insert.c_str());
 
     PGresult *res = NULL;
     res = PQexec(conn, insert.c_str());
     if (PQresultStatus(res) != PGRES_COMMAND_OK) {
-        std::cout << "Insert into table failed: " << PQresultErrorMessage(res) << std::endl;
+        std::cout << "Ошибка ввода в базу данных: " << PQresultErrorMessage(res) << std::endl;
+    }
+    PQclear(res);
+}
+
+// поиск в таблице
+void select_table(PGconn *conn, int choice){
+    PGresult *res = NULL;
+    
+    if(choice == 1)
+        res = PQexec(conn, "select surname, name from opoz_pers_mis;");
+    else
+        res = PQexec(conn, "select surname from opoz_pers_mis;");
+    
+    if (PQresultStatus(res) != PGRES_TUPLES_OK){
+        std::cout << "Select failed: " << PQresultErrorMessage(res) << std::endl;
+    } else {
+        /*
+        cout << "Get " << PQntuples(res) << "tuples, each tuple has " << PQnfields(res) << "fields" << endl;
+        // print column name
+        for (int i = 0; i < PQnfields(res); i++){
+            cout << PQfname(res, i) << "              ";
+        }
+        cout << endl;
+        */
+        // print column values
+        for (int i = 0; i < PQntuples(res); i++){
+            for (int j = 0; j < PQnfields(res); j++){
+                cout << PQgetvalue(res, i, j) << "\n";
+            }
+            cout << endl;
+        }
     }
     PQclear(res);
 }

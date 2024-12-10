@@ -17,10 +17,10 @@ using namespace std;
 // названия заголовков
 static const char *msg[] = {
     "Добро пожаловать в АИПС \"Опознание\"!",
-    "Выберите нужную команду (от 1 до 4):",
+    "Введите нужную команду (от 1 до 4):",
     "1. Ввод лица",
-    "2. Редактирование лица",
-    "3. Поиск лица",
+    "2. Поиск лица",
+    "3. Сформировать отчет",
     "4. Выход"
 };
 
@@ -68,14 +68,39 @@ int main(int argc, char **argv)
                         input_person(persmis);
                         cout << "Данные введены верно? (1 - да / 0 - нет).";
                         cin >> correct_input;
+                        fflush(stdin);
                     }
                     insert_table(conn, persmis);
                     break;
                 }
             case 2:
-                {
-                    cout << "Выбрано редактирование лица.\n";
+                {   
+                    int choice_search = 0;
+                    cout << "Выбран поиск лица.\n1 - для точного поиска по фамилии, 2 - для поиска по всем полям: ";
+                    cin >> choice_search;
+
+                    if(choice_search == 1){
+                        string surname;
+                        cout << "Введите фамилию: ";
+                        cin >> surname;
+                        select_table(conn, choice_search);
+                    }
+                    else if (choice_search == 2)
+                        select_table(conn, choice_search);
+                    else
+                        printf("Неверный выбор.\n");
                     break;
+                }
+            case 3:
+                {
+                    cout << "Выбрано формирование отчета.\n";
+                    break;
+                }
+            case 4:
+                {
+                    cout << "Выход!\n";
+                    PQfinish(conn); // Завершаем работу с БД
+                    exit(0);
                 }
             default:
                 {
@@ -84,9 +109,8 @@ int main(int argc, char **argv)
                 }
         }
         
-        //power = "off";
+        
     }
 
-    // Завершаем работу с БД
-    PQfinish(conn);
+    PQfinish(conn); // Завершаем работу с БД
 }
