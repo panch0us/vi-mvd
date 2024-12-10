@@ -1,6 +1,6 @@
 void input_person(PersonMissing &pm){
     string buf;
-    int buf_i = 0;
+    unsigned short int buf_i = 0;
 
     cout << "¬видите фамилию: ";
     cin >> buf;
@@ -19,15 +19,15 @@ void input_person(PersonMissing &pm){
     pm.setSex(buf);
 
     cout << "¬видите день рождени€: ";
-    cin >> buf;
+    cin >> buf_i;
     pm.setBirthDay(buf_i);
 
     cout << "¬видите мес€ц рождени€: ";
-    cin >> buf;
+    cin >> buf_i;
     pm.setBirthMonth(buf_i);
 
     cout << "¬видите год рождени€: ";
-    cin >> buf;
+    cin >> buf_i;
     pm.setBirthYear(buf_i);
 
     cout << "¬видите место рождени€: ";

@@ -6,7 +6,8 @@ void create_table(PGconn *conn){
                             surname                 VARCHAR(50),\
                             name                    VARCHAR(50),\
                             middle_name             VARCHAR(50),\
-                            sex                     VARCHAR(2));");
+                            sex                     VARCHAR(2),\
+                            birth_date              DATE);");
     if (PQresultStatus(res) != PGRES_COMMAND_OK){
         std::cout << "Create table failed: " << PQresultErrorMessage(res) << std::endl;
         PQclear(res);
@@ -18,14 +19,15 @@ void create_table(PGconn *conn){
 /* вставка в таблицу */
 void insert_table(PGconn *conn, PersonMissing &pm){
 
-    string insert = "insert into opoz_pers_mis (surname, name, middle_name, sex) values";
+    string insert = "insert into opoz_pers_mis (surname, name, middle_name, sex, birth_date) values";
 
+    printf("GETYEAR: %d\n", pm.getBirthYear());
     insert += "('" +\
         pm.getSurname()           + "', '" +\
         pm.getName()              + "', '" +\
         pm.getMiddleName()        + "', '" +\
-        pm.getSex()               +\
-        "');";
+        pm.getSex()               + "', '" +\
+        to_string(pm.getBirthYear()) + '-' + to_string(pm.getBirthMonth()) + '-' + to_string(pm.getBirthDay()) + "');";
 
     printf("%s\n", insert.c_str());
 
@@ -36,4 +38,3 @@ void insert_table(PGconn *conn, PersonMissing &pm){
     }
     PQclear(res);
 }
-

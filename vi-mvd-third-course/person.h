@@ -23,7 +23,7 @@ public:
     void setSex(string &s);
     void setBirthDay(unsigned short int bd);
     void setBirthMonth(unsigned short int bm);
-    void setBirthYear(unsigned short int y);
+    void setBirthYear(unsigned short int by);
     void setBirthPlace(string &bp);
     void setResidentPlaceLast(string &rpl);
     void setAppearance(string &a);
