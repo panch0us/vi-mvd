@@ -21,3 +21,6 @@
 
 Поисковый запрос может быть составлен по одному из перечисленных  данных или их совокупности. 
 
+Сборка проекта:
+1. Установка PostgreSQL 16
+2. g++ -Wall -g main.cpp -o main -I "C:\Program Files\PostgreSQL\16\include" -L "C:\Program Files\PostgreSQL\16\lib" -lpq
