@@ -6,15 +6,15 @@ class PersonMissing {
     unsigned short int birth_day;
     unsigned short int birth_month;
     unsigned short int birth_year;
-    string birth_place;          //РјРµСЃС‚Рѕ СЂРѕР¶РґРµРЅРёСЏ
-    string residence_place_last; //РїРѕСЃР»РµРґРЅРµРµ РјРµСЃС‚Рѕ Р¶РёС‚РµР»СЊСЃС‚РІР°
-    string appearance;           //РѕРїРёСЃР°РЅРёРµ РІРЅРµС€РЅРѕСЃС‚Рё
-    string teeth;                //СЃРѕСЃС‚РѕСЏРЅРёРµ Р·СѓР±РЅРѕРіРѕ Р°РїРїР°СЂР°С‚Р°
-    string voice;                //С…Р°СЂР°РєС‚РµСЂРЅС‹Рµ РїСЂРёРјРµС‚С‹ РіРѕР»РѕСЃР°
-    string blood_group;          //РіСЂСѓРїРїР° РєСЂРѕРІРё
-    string clothes;              //РѕРїРёСЃР°РЅРёРµ РѕРґРµР¶РґС‹
-    string headdress_size;       //СЂР°Р·РјРµСЂ РіРѕР»РѕРІРЅРѕРіРѕ СѓР±РѕСЂР°
-    string shoes_size;           //СЂР°Р·РјРµСЂС‹ РѕР±СѓРІРё
+    string birth_place;          //место рождения
+    string residence_place_last; //последнее место жительства
+    string appearance;           //описание внешности
+    string teeth;                //состояние зубного аппарата
+    string voice;                //характерные приметы голоса
+    string blood_group;          //группа крови
+    string clothes;              //описание одежды
+    string headdress_size;       //размер головного убора
+    string shoes_size;           //размеры обуви
     
 public:
     void setSurname(string &sn);
@@ -180,3 +180,4 @@ inline string &PersonMissing::getHeaddressSize(){
 inline string &PersonMissing::getShoesSize(){
     return shoes_size;
 }
+
