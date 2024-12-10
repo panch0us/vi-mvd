@@ -16,12 +16,12 @@ class PersonMissing {
     string headdress_size;                  // размер головного убора
     string shoes_size;                      // размеры обуви
     string area_loss;                       // район пропажи
-    unsigned short int day_loss_start       // день пропажи начало
-    unsigned short int month_loss_start     // месяц пропажи начало
-    unsigned short int year_loss_start      // год пропажи начало
-    unsigned short int day_loss_end         // день пропажи конец
-    unsigned short int month_loss_end       // месяц пропажи конец
-    unsigned short int year_loss_end        // год пропажи конец
+    unsigned short int day_loss_start;      // день пропажи начало
+    unsigned short int month_loss_start;    // месяц пропажи начало
+    unsigned short int year_loss_start;     // год пропажи начало
+    unsigned short int day_loss_end;        // день пропажи конец
+    unsigned short int month_loss_end;      // месяц пропажи конец
+    unsigned short int year_loss_end;       // год пропажи конец
 
 public:
     void setSurname(string &sn);
@@ -45,8 +45,8 @@ public:
     void setMonthLossStart(unsigned short int mls);
     void setYearLossStart(unsigned short int yls);
     void setDayLossEnd(unsigned short int dle);
-    void setMonthLossEnd(unsigned short int dle);
-    void setYearLossEnd(unsigned short int dle);
+    void setMonthLossEnd(unsigned short int mle);
+    void setYearLossEnd(unsigned short int yle);
     
     string &getSurname();
     string &getName();
@@ -138,6 +138,10 @@ inline void PersonMissing::setShoesSize(string &ss){
     shoes_size = ss;
 }
 
+inline void PersonMissing::setAreaLoss(string &al){
+    area_loss = al;
+}
+
 inline void PersonMissing::setDayLossStart(unsigned short int dls){
     day_loss_start = dls;
 }
@@ -150,15 +154,15 @@ inline void PersonMissing::setYearLossStart(unsigned short int yls){
     year_loss_start = yls;
 }
 
-inline void PersonMissing::setDayLossEnd(unsigned short int dls){
+inline void PersonMissing::setDayLossEnd(unsigned short int dle){
     day_loss_end = dle;
 }
 
-inline void PersonMissing::setMonthLossEnd(unsigned short int mls){
+inline void PersonMissing::setMonthLossEnd(unsigned short int mle){
     month_loss_end = mle;
 }
 
-inline void PersonMissing::setYearLossEnd(unsigned short int yls){
+inline void PersonMissing::setYearLossEnd(unsigned short int yle){
     year_loss_end = yle;
 }
 
