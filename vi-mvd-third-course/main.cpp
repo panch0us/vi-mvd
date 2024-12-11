@@ -77,42 +77,20 @@ int main(int argc, char **argv)
             case 2:
                 {
                     cout << "Выбран поиск лица\n";
-                        string surname, name, middle_name; 
-                        unsigned short int dayb, monthb, yearb;
-
-                        cout << "Введите фамилию: ";
-                        getline(cin, surname);
-
-                        cout << "Введите имя: ";
-                        getline(cin, name);
-
-                        cout << "Введите отчество: ";
-                        getline(cin, middle_name);
-                        
-                        cout << "Введите день рождения: ";
-                        cin >> dayb;
-
-                        cout << "Введите месяц рождения: ";
-                        cin >> monthb;
-
-                        cout << "Введите год рождения: ";
-                        cin >> yearb;
-
-                        fflush(stdin);
-                        select_table(conn, surname, name, middle_name, dayb, monthb, yearb);
+                    select_table(conn);
                     break;
                 }
             case 3:
                 {
                     cout << "Выбрано формирование отчета.\nВыберите вид отчета:\n1.Полный отчет\n2.Отчет за период времени\n3.Отчет по району";
                     cin >> select_menu;
-
+                    fflush(stdin);
                     if(select_menu == 1)
                         generate_report_1(conn);
                     else if(select_menu == 2)
-                        generate_report_2();
+                        generate_report_2(conn);
                     else if(select_menu == 3)
-                        generate_report_3();
+                        generate_report_3(conn);
                     else
                         printf("Неверный выбор отчета\n");
                     break;
@@ -128,10 +106,8 @@ int main(int argc, char **argv)
                     cout << "Неверный ввод!\n";
                     break;
                 }
-        }
-        
-        
+        }     
     }
-
     PQfinish(conn); // Завершаем работу с БД
+    return 0;
 }

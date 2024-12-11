@@ -83,15 +83,24 @@ void insert_table(PGconn *conn, PersonMissing &pm){
 }
 
 // поиск в таблице
-void select_table(PGconn                *conn, 
-                  string                surname, 
-                  string                name, 
-                  string                middle_name, 
-                  unsigned short int    dayb, 
-                  unsigned short int    monthb, 
-                  unsigned short int    yearb
-                  ){
-    
+void select_table(PGconn *conn){
+    string surname, name, middle_name; 
+    unsigned short int dayb, monthb, yearb;
+
+    cout << "¬ведите фамилию: ";
+    getline(cin, surname);
+    cout << "¬ведите им€: ";
+    getline(cin, name);
+    cout << "¬ведите отчество: ";
+    getline(cin, middle_name);
+    cout << "¬ведите день рождени€: ";
+    cin >> dayb;
+    cout << "¬ведите мес€ц рождени€: ";
+    cin >> monthb;
+    cout << "¬ведите год рождени€: ";
+    cin >> yearb;
+    fflush(stdin);
+
     string query = "select * from opoz_pers_mis where surname LIKE ";
     query += "'%" + surname + "%';";
     
@@ -121,6 +130,7 @@ void select_table(PGconn                *conn,
     PQclear(res);
 }
 
+// формирует отчет в файл по всем лицам
 void generate_report_1(PGconn *conn){
     PGresult *res = NULL;
     res = PQexec(conn, "select * from opoz_pers_mis;");
@@ -137,18 +147,87 @@ void generate_report_1(PGconn *conn){
                 }
                 out << endl;
                 out.close();
-                printf("‘ормирование отчета звершено!\n");
+                printf("‘ормирование отчета є 1 завершено!\n");
             }
         }
-
     }
     PQclear(res);
 }
 
-void generate_report_2(){
+// формирует отчет в файл по всем лицам по промежутку времени пропажи
+void generate_report_2(PGconn *conn){
+    unsigned short int day_loss_start, month_loss_start, year_loss_start;
+    unsigned short int day_loss_end, month_loss_end, year_loss_end;
+    cout << "¬ыберите промежток времени дл€ поиска:\n";
 
+    cout << "¬ведите день начала пропажи: ";
+    cin >> day_loss_start;
+    cout << "¬ведите мес€ц начала пропажи: ";
+    cin >> month_loss_start;
+    cout << "¬ведите год начала пропажи: ";
+    cin >> year_loss_start;
+    cout << "¬ведите день конца пропажи: ";
+    cin >> day_loss_end;
+    cout << "¬ведите мес€ц конца пропажи: ";
+    cin >> month_loss_end;
+    cout << "¬ведите год конца пропажи: ";
+    cin >> year_loss_end;
+    fflush(stdin); 
+
+    string date_start = to_string(year_loss_start) + '-' + to_string(month_loss_start) + '-' + to_string(day_loss_start);
+    string date_end   = to_string(year_loss_end)   + '-' + to_string(month_loss_end)   + '-' + to_string(day_loss_end);
+    string query      = "select * from opoz_pers_mis where date_loss_start >= ";
+    query += "'" + date_start + "' AND date_loss_end <= '" + date_end + "';";
+    
+    PGresult *res = NULL;
+    res = PQexec(conn, query.c_str());
+    
+    if (PQresultStatus(res) != PGRES_TUPLES_OK){
+        cout << "ќшибка Select: " << PQresultErrorMessage(res) << std::endl;
+    } else {
+        ofstream out; // поток дл€ записи в файл дл€ формировани€ отчета
+        out.open("отчет_2.csv", ios::app);
+        if (out.is_open()){
+            for (int i = 0; i < PQntuples(res); i++){
+                for (int j = 0; j < PQnfields(res); j++){
+                    out << PQgetvalue(res, i, j) << ";";
+                }
+                out << endl;
+                out.close();
+                printf("‘ормирование отчета є 2 завершено!\n");
+            }
+        }
+    }
+    PQclear(res);
 }
 
-void generate_report_3(){
+// формирует отчет в файл по всем лицам, пропавшим в определенном районе
+void generate_report_3(PGconn *conn){
+    string area;
+    cout << "¬ведите район дл€ формировани€ отчета: ";
+    getline(cin, area);
 
+    string query = "SELECT * FROM opoz_pers_mis WHERE area_loss LIKE ";
+    query += "'%" + area + "%';";
+    
+    PGresult *res = NULL;
+    res = PQexec(conn, query.c_str());
+    
+    if (PQresultStatus(res) != PGRES_TUPLES_OK){
+        std::cout << "Select failed: " << PQresultErrorMessage(res) << std::endl;
+    } else {
+        ofstream out; // поток дл€ записи в файл дл€ формировани€ отчета
+        out.open("отчет_3.csv", ios::app);
+        if (out.is_open()){
+            for (int i = 0; i < PQntuples(res); i++){
+                for (int j = 0; j < PQnfields(res); j++){
+                    out << PQgetvalue(res, i, j) << ";";
+                }
+                out << endl;
+                out.close();
+                printf("‘ормирование отчета є 3 завершено!\n");
+        }
+    }
+    PQclear(res);
+}
 }
