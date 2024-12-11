@@ -1,4 +1,4 @@
-/* создание таблицы */
+/* создание основной таблицы */
 void create_table(PGconn *conn){
     PGresult *res = NULL;
     res = PQexec(conn, "create table if not exists opoz_pers_mis(\
@@ -22,7 +22,7 @@ void create_table(PGconn *conn){
                             date_loss_end           DATE\
                             );");
     if (PQresultStatus(res) != PGRES_COMMAND_OK){
-        std::cout << "Create table failed: " << PQresultErrorMessage(res) << std::endl;
+        //cout << "Таблица не создана: " << PQresultErrorMessage(res) << endl;
         PQclear(res);
     }
     PQclear(res);
@@ -76,7 +76,7 @@ void insert_table(PGconn *conn, PersonMissing &pm){
 
     PGresult *res = NULL;
     res = PQexec(conn, insert.c_str());
-    if (PQresultStatus(res) != PGRES_COMMAND_OK) {
+    if (PQresultStatus(res) != PGRES_COMMAND_OK){
         std::cout << "Ошибка ввода в базу данных: " << PQresultErrorMessage(res) << std::endl;
     }
     PQclear(res);
@@ -226,8 +226,8 @@ void generate_report_3(PGconn *conn){
                 out << endl;
                 out.close();
                 printf("Формирование отчета № 3 завершено!\n");
+            }
         }
+        PQclear(res);
     }
-    PQclear(res);
-}
 }
