@@ -5,6 +5,7 @@ using namespace std;
 
 #include <Windows.h> // для кодировка CP1251
 #include <stdio.h>
+#include <fstream>   // для записи в файл
 #include <stdlib.h>
 #include <iostream>
 #include <libpq-fe.h>
@@ -103,12 +104,11 @@ int main(int argc, char **argv)
                 }
             case 3:
                 {
-                    cout << "Выбрано формирование отчета.\nВыберите вид отчета:\
-                    1.Полный отчет\n2.Отчет за период времени\n3.Отчет по району";
+                    cout << "Выбрано формирование отчета.\nВыберите вид отчета:\n1.Полный отчет\n2.Отчет за период времени\n3.Отчет по району";
                     cin >> select_menu;
-                    
+
                     if(select_menu == 1)
-                        generate_report_1();
+                        generate_report_1(conn);
                     else if(select_menu == 2)
                         generate_report_2();
                     else if(select_menu == 3)

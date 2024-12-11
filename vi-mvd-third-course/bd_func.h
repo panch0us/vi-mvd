@@ -111,7 +111,7 @@ void select_table(PGconn                *conn,
         cout << endl;
         */
         // print column values
-        for (int i = 1; i < PQntuples(res); i++){ // i = 1, т.к пропускаем поле id
+        for (int i = 0; i < PQntuples(res); i++){ // i = 1, т.к пропускаем поле id
             for (int j = 0; j < PQnfields(res); j++){
                 cout << PQgetvalue(res, i, j) << "\n";
             }
@@ -121,8 +121,28 @@ void select_table(PGconn                *conn,
     PQclear(res);
 }
 
-void generate_report_1(){
+void generate_report_1(PGconn *conn){
+    PGresult *res = NULL;
+    res = PQexec(conn, "select * from opoz_pers_mis;");
+    
+    if (PQresultStatus(res) != PGRES_TUPLES_OK){
+        cout << "Ошибка Select: " << PQresultErrorMessage(res) << std::endl;
+    } else {
+        ofstream out; // поток для записи в файл для формирования отчета
+        out.open("отчет_1.csv", ios::app);
+        if (out.is_open()){
+            for (int i = 0; i < PQntuples(res); i++){
+                for (int j = 0; j < PQnfields(res); j++){
+                    out << PQgetvalue(res, i, j) << ";";
+                }
+                out << endl;
+                out.close();
+                printf("Формирование отчета звершено!\n");
+            }
+        }
 
+    }
+    PQclear(res);
 }
 
 void generate_report_2(){
