@@ -40,14 +40,21 @@ int main(int argc, char **argv)
         PQfinish(conn);
         return 1;
     }
-
-    create_table(conn); // создаем таблицу в Ѕƒ (если не создана)
+    
+    int result_create_table_auth;
+    result_create_table_auth = create_table_auth(conn); // создаем таблицу дл€ авторизации (если не создана)
+    create_table_opoz(conn); // создаем таблицу дл€ опознани€ (если не создана)
 
     int select_menu;       // выбор пользовател€ по разделам меню
     PersonMissing persmis; // создаем объект дл€ опознани€
+    string power = "on";
 
     // вывод главного меню на экран
-    while(1){
+    while(power == "on"){
+        if(result_create_table_auth == 0)
+            create_admin(conn);
+        
+
         for(int i = 0; i < 9; i++)
             printf("%s\n", msg[i]);
     
