@@ -1,4 +1,4 @@
-/* СЃРѕР·РґР°РЅРёРµ С‚Р°Р±Р»РёС†С‹ */
+/* создание таблицы */
 void create_table(PGconn *conn){
     PGresult *res = NULL;
     res = PQexec(conn, "create table if not exists opoz_pers_mis(\
@@ -29,7 +29,7 @@ void create_table(PGconn *conn){
 }
 
 
-/* РІСЃС‚Р°РІРєР° РІ С‚Р°Р±Р»РёС†Сѓ */
+/* вставка в таблицу */
 void insert_table(PGconn *conn, PersonMissing &pm){
 
     string insert = "insert into opoz_pers_mis (\
@@ -77,19 +77,27 @@ void insert_table(PGconn *conn, PersonMissing &pm){
     PGresult *res = NULL;
     res = PQexec(conn, insert.c_str());
     if (PQresultStatus(res) != PGRES_COMMAND_OK) {
-        std::cout << "РћС€РёР±РєР° РІРІРѕРґР° РІ Р±Р°Р·Сѓ РґР°РЅРЅС‹С…: " << PQresultErrorMessage(res) << std::endl;
+        std::cout << "Ошибка ввода в базу данных: " << PQresultErrorMessage(res) << std::endl;
     }
     PQclear(res);
 }
 
-// РїРѕРёСЃРє РІ С‚Р°Р±Р»РёС†Рµ
-void select_table(PGconn *conn, int choice){
+// поиск в таблице
+void select_table(PGconn                *conn, 
+                  string                surname, 
+                  string                name, 
+                  string                middle_name, 
+                  unsigned short int    dayb, 
+                  unsigned short int    monthb, 
+                  unsigned short int    yearb
+                  ){
+    
+    string query = "select * from opoz_pers_mis where surname LIKE ";
+    query += "'%" + surname + "%';";
+    
     PGresult *res = NULL;
     
-    if(choice == 1)
-        res = PQexec(conn, "select surname, name from opoz_pers_mis;");
-    else
-        res = PQexec(conn, "select surname from opoz_pers_mis;");
+    res = PQexec(conn, query.c_str());
     
     if (PQresultStatus(res) != PGRES_TUPLES_OK){
         std::cout << "Select failed: " << PQresultErrorMessage(res) << std::endl;
@@ -98,12 +106,12 @@ void select_table(PGconn *conn, int choice){
         cout << "Get " << PQntuples(res) << "tuples, each tuple has " << PQnfields(res) << "fields" << endl;
         // print column name
         for (int i = 0; i < PQnfields(res); i++){
-            cout << PQfname(res, i) << "              ";
+            cout << PQfname(res, i) << "       ";
         }
         cout << endl;
         */
         // print column values
-        for (int i = 0; i < PQntuples(res); i++){
+        for (int i = 1; i < PQntuples(res); i++){ // i = 1, т.к пропускаем поле id
             for (int j = 0; j < PQnfields(res); j++){
                 cout << PQgetvalue(res, i, j) << "\n";
             }
@@ -111,4 +119,16 @@ void select_table(PGconn *conn, int choice){
         }
     }
     PQclear(res);
+}
+
+void generate_report_1(){
+
+}
+
+void generate_report_2(){
+
+}
+
+void generate_report_3(){
+
 }

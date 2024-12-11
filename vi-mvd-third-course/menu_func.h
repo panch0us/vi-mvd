@@ -2,97 +2,97 @@ void input_person(PersonMissing &pm){
     string buf;
     unsigned short int buf_i = 0;
 
-    cout << "¬видите фамилию: ";
+    cout << "¬ведите фамилию: ";
     getline(cin, buf);
     pm.setSurname(buf);
 
-    cout << "¬видите им€: ";
+    cout << "¬ведите им€: ";
     getline(cin, buf);
     pm.setName(buf);
 
-    cout << "¬видите отчество: ";
+    cout << "¬ведите отчество: ";
     getline(cin, buf);
     pm.setMiddleName(buf);
 
-    cout << "¬видите пол (м или ж): ";
+    cout << "¬ведите пол (м или ж): ";
     cin >> buf;
     pm.setSex(buf);
 
-    cout << "¬видите день рождени€: ";
+    cout << "¬ведите день рождени€: ";
     cin >> buf_i;
     pm.setBirthDay(buf_i);
 
-    cout << "¬видите мес€ц рождени€: ";
+    cout << "¬ведите мес€ц рождени€: ";
     cin >> buf_i;
     pm.setBirthMonth(buf_i);
 
-    cout << "¬видите год рождени€: ";
+    cout << "¬ведите год рождени€: ";
     cin >> buf_i;
     pm.setBirthYear(buf_i);
 
     fflush(stdin); // очищаем стандартный поток ввода от символа \n, оставшегос€ после cin
     
-    cout << "¬видите место рождени€: ";
+    cout << "¬ведите место рождени€: ";
     getline(cin, buf);
     pm.setBirthPlace(buf);
 
-    cout << "¬видите последнее место жительства: ";
+    cout << "¬ведите последнее место жительства: ";
     getline(cin, buf);
     pm.setResidentPlaceLast(buf);
 
-    cout << "¬видите описание внешности: ";
+    cout << "¬ведите описание внешности: ";
     getline(cin, buf);
     pm.setAppearance(buf);
 
-    cout << "¬видите состо€ние зубного аппарата: ";
+    cout << "¬ведите состо€ние зубного аппарата: ";
     getline(cin, buf);
     pm.setTeeth(buf);
 
-    cout << "¬видите характерные приметы голоса: ";
+    cout << "¬ведите характерные приметы голоса: ";
     getline(cin, buf);
     pm.setVoice(buf);
 
-    cout << "¬видите группу крови: ";
+    cout << "¬ведите группу крови: ";
     getline(cin, buf);
     pm.setBloodGroup(buf);
 
-    cout << "¬видите описание одежды: ";
+    cout << "¬ведите описание одежды: ";
     getline(cin, buf);
     pm.setClothes(buf);
 
-    cout << "¬видите размер головного убора: ";
+    cout << "¬ведите размер головного убора: ";
     getline(cin, buf);
     pm.setHeaddressSize(buf);
 
-    cout << "¬видите размеры обуви: ";
+    cout << "¬ведите размеры обуви: ";
     getline(cin, buf);
     pm.setShoesSize(buf);
 
-    cout << "¬видите район пропажи: ";
+    cout << "¬ведите район пропажи: ";
     getline(cin, buf);
     pm.setAreaLoss(buf);
 
-    cout << "¬видите день начала пропажи: ";
+    cout << "¬ведите день начала пропажи: ";
     cin >> buf_i;
     pm.setDayLossStart(buf_i);
 
-    cout << "¬видите мес€ц начала пропажи: ";
+    cout << "¬ведите мес€ц начала пропажи: ";
     cin >> buf_i;
     pm.setMonthLossStart(buf_i);
 
-    cout << "¬видите год начала пропажи: ";
+    cout << "¬ведите год начала пропажи: ";
     cin >> buf_i;
     pm.setYearLossStart(buf_i);
 
-    cout << "¬видите день конца пропажи: ";
+    cout << "¬ведите день конца пропажи: ";
     cin >> buf_i;
     pm.setDayLossEnd(buf_i);
 
-    cout << "¬видите мес€ц конца пропажи: ";
+    cout << "¬ведите мес€ц конца пропажи: ";
     cin >> buf_i;
     pm.setMonthLossEnd(buf_i);
 
-    cout << "¬видите год конца пропажи: ";
+    cout << "¬ведите год конца пропажи: ";
     cin >> buf_i;
     pm.setYearLossEnd(buf_i);
 

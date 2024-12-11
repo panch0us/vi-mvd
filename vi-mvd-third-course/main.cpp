@@ -74,26 +74,47 @@ int main(int argc, char **argv)
                     break;
                 }
             case 2:
-                {   
-                    int choice_search = 0;
-                    cout << "Выбран поиск лица.\n1 - для точного поиска по фамилии, 2 - для поиска по всем полям: ";
-                    cin >> choice_search;
+                {
+                    cout << "Выбран поиск лица\n";
+                        string surname, name, middle_name; 
+                        unsigned short int dayb, monthb, yearb;
 
-                    if(choice_search == 1){
-                        string surname;
                         cout << "Введите фамилию: ";
-                        cin >> surname;
-                        select_table(conn, choice_search);
-                    }
-                    else if (choice_search == 2)
-                        select_table(conn, choice_search);
-                    else
-                        printf("Неверный выбор.\n");
+                        getline(cin, surname);
+
+                        cout << "Введите имя: ";
+                        getline(cin, name);
+
+                        cout << "Введите отчество: ";
+                        getline(cin, middle_name);
+                        
+                        cout << "Введите день рождения: ";
+                        cin >> dayb;
+
+                        cout << "Введите месяц рождения: ";
+                        cin >> monthb;
+
+                        cout << "Введите год рождения: ";
+                        cin >> yearb;
+
+                        fflush(stdin);
+                        select_table(conn, surname, name, middle_name, dayb, monthb, yearb);
                     break;
                 }
             case 3:
                 {
-                    cout << "Выбрано формирование отчета.\n";
+                    cout << "Выбрано формирование отчета.\nВыберите вид отчета:\
+                    1.Полный отчет\n2.Отчет за период времени\n3.Отчет по району";
+                    cin >> select_menu;
+                    
+                    if(select_menu == 1)
+                        generate_report_1();
+                    else if(select_menu == 2)
+                        generate_report_2();
+                    else if(select_menu == 3)
+                        generate_report_3();
+                    else
+                        printf("Неверный выбор отчета\n");
                     break;
                 }
             case 4:
