@@ -1,11 +1,35 @@
+// проверка, создана ли таблица
+int check_exist_tables(PGconn *conn, string &name_table){
+    int exist = 0; // если 0 - то таблица не существует
+    string query = "SELECT COUNT(table_name) FROM information_schema.tables WHERE table_schema LIKE 'public' AND table_type LIKE 'BASE TABLE' AND table_name = ";
+    query += "'" + name_table + "';";
+    
+    PGresult *res = NULL;
+    res = PQexec(conn, query.c_str());
+
+    if (PQresultStatus(res) != PGRES_TUPLES_OK){
+        std::cout << "Ошибка выборки админа: " << PQresultErrorMessage(res) << std::endl;
+        return 2;
+    }
+
+    for (int i = 0; i < PQntuples(res); i++){
+            for (int j = 0; j < PQnfields(res); j++){
+                exist = atoi(PQgetvalue(res, i, j));
+            }
+        }
+    
+    PQclear(res);
+    return exist;
+}
+
 /* создание таблицы для авторизации*/
 int create_table_auth(PGconn *conn){
     PGresult *res = NULL;
     res = PQexec(conn, "create table if not exists auth(\
                             id                      SERIAL PRIMARY KEY,\
-                            login                   VARCHAR(50) UNIQUE,\
-                            pass                    VARCHAR(250),\
-                            role                    VARCHAR(50)\
+                            login                   VARCHAR(50) UNIQUE NOT NULL,\
+                            pass                    VARCHAR(250) NOT NULL,\
+                            role                    VARCHAR(50) NOT NULL\
                             );");
     if (PQresultStatus(res) != PGRES_COMMAND_OK){
         cout << "Таблица авторизации не создана: " << PQresultErrorMessage(res) << endl;
@@ -36,8 +60,8 @@ int create_table_opoz(PGconn *conn){
                             headdress_size          VARCHAR(15),\
                             shoes_size              VARCHAR(15),\
                             area_loss               VARCHAR(30),\
-                            date_loss_start         DATE,\
-                            date_loss_end           DATE\
+                            date_loss_start         DATE NOT NULL,\
+                            date_loss_end           DATE NOT NULL\
                             );");
     if (PQresultStatus(res) != PGRES_COMMAND_OK){
         cout << "Таблица опознания не создана: " << PQresultErrorMessage(res) << endl;
@@ -108,7 +132,6 @@ int auth_adm(PGconn *conn){
 
 // вставка в таблицу
 void insert_table(PGconn *conn, PersonMissing &pm){
-
     string insert = "insert into opoz_pers_mis (\
         surname,\
         name,\
@@ -162,7 +185,6 @@ void insert_table(PGconn *conn, PersonMissing &pm){
 // поиск в таблице
 void select_table(PGconn *conn){
     string surname, name, middle_name; 
-    unsigned short int dayb, monthb, yearb;
 
     cout << "Введите фамилию: ";
     getline(cin, surname);
@@ -170,16 +192,9 @@ void select_table(PGconn *conn){
     getline(cin, name);
     cout << "Введите отчество: ";
     getline(cin, middle_name);
-    cout << "Введите день рождения: ";
-    cin >> dayb;
-    cout << "Введите месяц рождения: ";
-    cin >> monthb;
-    cout << "Введите год рождения: ";
-    cin >> yearb;
-    fflush(stdin);
 
     string query = "select * from opoz_pers_mis where surname LIKE ";
-    query += "'%" + surname + "%';";
+    query += "'%" + surname + "%' AND name LIKE '%" + name + "%' AND middle_name LIKE '%" + middle_name + "%'";
     
     PGresult *res = NULL;
     
@@ -189,15 +204,12 @@ void select_table(PGconn *conn){
         std::cout << "Select failed: " << PQresultErrorMessage(res) << std::endl;
     } else {
         /*
-        cout << "Get " << PQntuples(res) << "tuples, each tuple has " << PQnfields(res) << "fields" << endl;
         // print column name
-        for (int i = 0; i < PQnfields(res); i++){
+        for (int i = 0; i < PQnfields(res); i++)
             cout << PQfname(res, i) << "       ";
-        }
         cout << endl;
         */
-        // print column values
-        for (int i = 0; i < PQntuples(res); i++){ // i = 1, т.к пропускаем поле id
+        for (int i = 0; i < PQntuples(res); i++){
             for (int j = 0; j < PQnfields(res); j++){
                 cout << PQgetvalue(res, i, j) << "\n";
             }

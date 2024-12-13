@@ -30,7 +30,7 @@ static const char *msg[] = {
 
 int main(int argc, char **argv)
 {
-    int auth_status = 0; // если 0 - значит ни кто не авторизовался, если 1 - значит авторизовался.
+    int auth_status = 0; // если 0 - значит ни кто не авторизовался, если 1 - авторизовался.
     
     SetConsoleCP(1251);// установка кодовой страницы win-cp 1251 в поток ввода
     SetConsoleOutputCP(1251); // установка кодовой страницы win-cp 1251 в поток вывода
@@ -42,11 +42,20 @@ int main(int argc, char **argv)
         PQfinish(conn);
         return 1;
     }
+
+    int exist_table = 0;
+    string name_table; // для передачи параметра в функцию check_exist_tables
+
+    name_table = "auth";
+    exist_table = check_exist_tables(conn, name_table);
+    if(exist_table == 0)
+        create_table_auth(conn); // создаем таблицу для авторизации
+
+    name_table = "opoz_pers_mis";
+    exist_table = check_exist_tables(conn, name_table);
+    if(exist_table == 0)
+        create_table_opoz(conn); // создаем таблицу для опознания (если не создана)
     
-    create_table_auth(conn); // создаем таблицу для авторизации
-    create_table_opoz(conn); // создаем таблицу для опознания (если не создана)
-
-
     int select_menu;       // выбор пользователя по разделам меню
     PersonMissing persmis; // создаем объект для опознания
     string power = "on";
@@ -62,7 +71,7 @@ int main(int argc, char **argv)
             return 1;
         }
 
-        int auth_adm_ok = 0;
+        int auth_adm_ok = 0; // если 0 - значит администратор не авторизовался
         
         while(auth_adm_ok == 0 && auth_status == 0){
             auth_adm_ok = auth_adm(conn); // аутентификация админа
