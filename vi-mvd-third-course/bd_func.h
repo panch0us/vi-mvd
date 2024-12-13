@@ -3,7 +3,7 @@ int create_table_auth(PGconn *conn){
     PGresult *res = NULL;
     res = PQexec(conn, "create table if not exists auth(\
                             id                      SERIAL PRIMARY KEY,\
-                            login                   VARCHAR(50),\
+                            login                   VARCHAR(50) UNIQUE,\
                             pass                    VARCHAR(250),\
                             role                    VARCHAR(50)\
                             );");
@@ -54,11 +54,12 @@ int dont_exist_admin(PGconn *conn){
     string query = "select login from auth where login = 'admin'";
     PGresult *res = NULL;
     res = PQexec(conn, query.c_str());
+
     if (PQresultStatus(res) != PGRES_TUPLES_OK){
         std::cout << "ќшибка выборки админа: " << PQresultErrorMessage(res) << std::endl;
         return 2;
     }
-
+    
     exist_admin = PQntuples(res);
     PQclear(res);
     return exist_admin;
@@ -79,44 +80,30 @@ void create_admin(PGconn *conn){
 }
 
 // авторизаци€
-void auth(PGconn *conn){
+int auth_adm(PGconn *conn){
     string login, pass;
+    int auth_adm_ok = 0;
 
     fflush(stdin);
     cout << "¬ведите логин: ";
     getline(cin, login);
-    cout << "¬ведите им€: ";
-    getline(cin, pass);
     cout << "¬ведите пароль: ";
     getline(cin, pass);
 
     string query = "select login, pass from auth where login = ";
     query += "'" + login + "' AND pass = '" + pass + "';";
-    
+
     PGresult *res = NULL;
     
     res = PQexec(conn, query.c_str());
     
-    if (PQresultStatus(res) != PGRES_TUPLES_OK){
-        std::cout << "Select failed: " << PQresultErrorMessage(res) << std::endl;
-    } else {
-        /*
-        cout << "Get " << PQntuples(res) << "tuples, each tuple has " << PQnfields(res) << "fields" << endl;
-        // print column name
-        for (int i = 0; i < PQnfields(res); i++){
-            cout << PQfname(res, i) << "       ";
-        }
-        cout << endl;
-        */
-        // print column values
-        for (int i = 0; i < PQntuples(res); i++){ // i = 1, т.к пропускаем поле id
-            for (int j = 0; j < PQnfields(res); j++){
-                cout << PQgetvalue(res, i, j) << "\n";
-            }
-            cout << endl;
-        }
-    }
+    if (PQresultStatus(res) != PGRES_TUPLES_OK)
+        std::cout << "ќшибка авторизации " << PQresultErrorMessage(res) << std::endl;
+    else
+        auth_adm_ok = PQntuples(res);
     PQclear(res);
+
+    return auth_adm_ok;
 }
 
 // вставка в таблицу

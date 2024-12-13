@@ -30,6 +30,8 @@ static const char *msg[] = {
 
 int main(int argc, char **argv)
 {
+    int auth_status = 0; // если 0 - значит ни кто не авторизовался, если 1 - значит авторизовался.
+    
     SetConsoleCP(1251);// установка кодовой страницы win-cp 1251 в поток ввода
     SetConsoleOutputCP(1251); // установка кодовой страницы win-cp 1251 в поток вывода
 
@@ -53,11 +55,29 @@ int main(int argc, char **argv)
     while(power == "on"){
         int exist_admin = 0; // админ не существует.
         exist_admin = dont_exist_admin(conn);
-        if()
-        create_admin(conn);
+        if(exist_admin == 0)
+            create_admin(conn);
+        else if((exist_admin > 1) || (exist_admin < 0)){
+            PQfinish(conn);
+            return 1;
+        }
 
-        auth(conn); // аутентификация 
-
+        int auth_adm_ok = 0;
+        
+        while(auth_adm_ok == 0 && auth_status == 0){
+            auth_adm_ok = auth_adm(conn); // аутентификация админа
+            if(auth_adm_ok == 1){
+                printf("Добро пожаловать!\n");
+                auth_status = 1;
+            }
+            else if(auth_adm_ok == 0)
+                printf("Неверный логин или пароль! Попробуйте заново!\n");
+            else{
+                printf("Неизвестная ошибка авторизации!\n");
+                PQfinish(conn);
+                return 1;
+            }
+        }
         for(int i = 0; i < 9; i++)
             printf("%s\n", msg[i]);
     
