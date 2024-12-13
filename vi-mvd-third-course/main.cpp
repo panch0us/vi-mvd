@@ -41,9 +41,9 @@ int main(int argc, char **argv)
         return 1;
     }
     
-    int result_create_table_auth;
-    result_create_table_auth = create_table_auth(conn); // создаем таблицу для авторизации (если не создана)
+    create_table_auth(conn); // создаем таблицу для авторизации
     create_table_opoz(conn); // создаем таблицу для опознания (если не создана)
+
 
     int select_menu;       // выбор пользователя по разделам меню
     PersonMissing persmis; // создаем объект для опознания
@@ -51,9 +51,12 @@ int main(int argc, char **argv)
 
     // вывод главного меню на экран
     while(power == "on"){
-        if(result_create_table_auth == 0)
-            create_admin(conn);
-        
+        int exist_admin = 0; // админ не существует.
+        exist_admin = dont_exist_admin(conn);
+        if()
+        create_admin(conn);
+
+        auth(conn); // аутентификация 
 
         for(int i = 0; i < 9; i++)
             printf("%s\n", msg[i]);

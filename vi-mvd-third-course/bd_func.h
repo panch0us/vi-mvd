@@ -17,7 +17,7 @@ int create_table_auth(PGconn *conn){
 }
 
 /* создание основной таблицы */
-void create_table_opoz(PGconn *conn){
+int create_table_opoz(PGconn *conn){
     PGresult *res = NULL;
     res = PQexec(conn, "create table if not exists opoz_pers_mis(\
                             id                      SERIAL PRIMARY KEY,\
@@ -42,8 +42,26 @@ void create_table_opoz(PGconn *conn){
     if (PQresultStatus(res) != PGRES_COMMAND_OK){
         cout << "Таблица опознания не создана: " << PQresultErrorMessage(res) << endl;
         PQclear(res);
+        return 1;
     }
     PQclear(res);
+    return 0;
+}
+
+int dont_exist_admin(PGconn *conn){
+    int exist_admin; // если 1 - то существует, если 0 - нет, другое число - ошибка.
+
+    string query = "select login from auth where login = 'admin'";
+    PGresult *res = NULL;
+    res = PQexec(conn, query.c_str());
+    if (PQresultStatus(res) != PGRES_TUPLES_OK){
+        std::cout << "Ошибка выборки админа: " << PQresultErrorMessage(res) << std::endl;
+        return 2;
+    }
+
+    exist_admin = PQntuples(res);
+    PQclear(res);
+    return exist_admin;
 }
 
 // создание админа
@@ -58,6 +76,47 @@ void create_admin(PGconn *conn){
     }
     PQclear(res);
     printf("Создана роль администратора!\n");
+}
+
+// авторизация
+void auth(PGconn *conn){
+    string login, pass;
+
+    fflush(stdin);
+    cout << "Введите логин: ";
+    getline(cin, login);
+    cout << "Введите имя: ";
+    getline(cin, pass);
+    cout << "Введите пароль: ";
+    getline(cin, pass);
+
+    string query = "select login, pass from auth where login = ";
+    query += "'" + login + "' AND pass = '" + pass + "';";
+    
+    PGresult *res = NULL;
+    
+    res = PQexec(conn, query.c_str());
+    
+    if (PQresultStatus(res) != PGRES_TUPLES_OK){
+        std::cout << "Select failed: " << PQresultErrorMessage(res) << std::endl;
+    } else {
+        /*
+        cout << "Get " << PQntuples(res) << "tuples, each tuple has " << PQnfields(res) << "fields" << endl;
+        // print column name
+        for (int i = 0; i < PQnfields(res); i++){
+            cout << PQfname(res, i) << "       ";
+        }
+        cout << endl;
+        */
+        // print column values
+        for (int i = 0; i < PQntuples(res); i++){ // i = 1, т.к пропускаем поле id
+            for (int j = 0; j < PQnfields(res); j++){
+                cout << PQgetvalue(res, i, j) << "\n";
+            }
+            cout << endl;
+        }
+    }
+    PQclear(res);
 }
 
 // вставка в таблицу
