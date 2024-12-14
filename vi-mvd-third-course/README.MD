@@ -24,3 +24,9 @@
 Сборка проекта:
 1. Установка PostgreSQL 16
 2. g++ -Wall -g main.cpp -o main -I "C:\Program Files\PostgreSQL\16\include" -L "C:\Program Files\PostgreSQL\16\lib" -lpq
+3. Из директории PostgreSQL скинуть в директорию проекта файлы: libiconv-2.dll, libintl-9.dll, libpq.dll, libwinpthread-1.dll.
+
+Инфа:
+1. Примеры работы в libpq в PostgreSQL https://gist.github.com/ictlyh/12fe787ec265b33fd7e4b0bd08bc27cb
+2. Примеры работы в libpq в PostgreSQL https://postgrespro.ru/docs/postgresql/9.6/libpq-build
+3. Примеры работы в libpq в PostgreSQL https://postgrespro.ru/docs/postgresql/9.6/libpq-example
