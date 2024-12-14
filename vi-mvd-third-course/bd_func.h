@@ -172,7 +172,7 @@ void insert_table(PGconn *conn, PersonMissing &pm){
         to_string(pm.getDayLossEnd())     + '-'    + to_string(pm.getMonthLossEnd())   + '-' + to_string(pm.getYearLossEnd()) +\
         "');";
 
-    //printf("%s\n", insert.c_str());
+    printf("Сведения о лице введены в базу!\n");
 
     PGresult *res = NULL;
     res = PQexec(conn, insert.c_str());
