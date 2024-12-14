@@ -228,16 +228,15 @@ void generate_report_1(PGconn *conn){
         cout << "Ошибка Select: " << PQresultErrorMessage(res) << std::endl;
     } else {
         ofstream out; // поток для записи в файл для формирования отчета
-        out.open("отчет_1.csv", ios::app);
+        out.open("отчет_1.csv", ios::trunc);
         if (out.is_open()){
             for (int i = 0; i < PQntuples(res); i++){
-                for (int j = 0; j < PQnfields(res); j++){
+                for (int j = 0; j < PQnfields(res); j++)
                     out << PQgetvalue(res, i, j) << ";";
-                }
                 out << endl;
-                out.close();
-                printf("Формирование отчета № 1 завершено!\n");
             }
+        out.close();
+        printf("Формирование отчета № 1 завершено!\n");
         }
     }
     PQclear(res);
@@ -275,16 +274,15 @@ void generate_report_2(PGconn *conn){
         cout << "Ошибка Select: " << PQresultErrorMessage(res) << std::endl;
     } else {
         ofstream out; // поток для записи в файл для формирования отчета
-        out.open("отчет_2.csv", ios::app);
+        out.open("отчет_2.csv", ios::trunc);
         if (out.is_open()){
             for (int i = 0; i < PQntuples(res); i++){
-                for (int j = 0; j < PQnfields(res); j++){
+                for (int j = 0; j < PQnfields(res); j++)
                     out << PQgetvalue(res, i, j) << ";";
-                }
                 out << endl;
-                out.close();
-                printf("Формирование отчета № 2 завершено!\n");
             }
+        out.close();
+        printf("Формирование отчета № 2 завершено!\n");
         }
     }
     PQclear(res);
@@ -306,16 +304,15 @@ void generate_report_3(PGconn *conn){
         std::cout << "Select failed: " << PQresultErrorMessage(res) << std::endl;
     } else {
         ofstream out; // поток для записи в файл для формирования отчета
-        out.open("отчет_3.csv", ios::app);
+        out.open("отчет_3.csv", ios::trunc);
         if (out.is_open()){
             for (int i = 0; i < PQntuples(res); i++){
-                for (int j = 0; j < PQnfields(res); j++){
+                for (int j = 0; j < PQnfields(res); j++)
                     out << PQgetvalue(res, i, j) << ";";
-                }
                 out << endl;
-                out.close();
-                printf("Формирование отчета № 3 завершено!\n");
             }
+        out.close();
+        printf("Формирование отчета № 3 завершено!\n");
         }
         PQclear(res);
     }
